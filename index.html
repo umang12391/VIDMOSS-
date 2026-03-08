@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIDMOSS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">VIDMOSS</div>
+        <div class="menu-wrapper">
+            <button class="consult-btn"><i class="fas fa-calendar-check"></i>Book</button>
+            <div class="menu-icon" id="menuIcon">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="menu-popup" id="menuPopup">
+        <ul>
+            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="#"><i class="fas fa-hand-holding-heart"></i> Services</a></li>
+            <li><a href="#"><i class="fas fa-spa"></i> Wellness Centers</a></li>
+            <li><a href="#"><i class="fas fa-briefcase"></i> Business Opportunity</a></li>
+            <li><a href="#"><i class="fas fa-handshake"></i> Partner Program</a></li>
+            <li><a href="#"><i class="fas fa-chart-line"></i> Investors</a></li>
+            <li><a href="#"><i class="fas fa-blog"></i> Blog</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <main class="content" id="mainContent">
+        <div class="hero-box">
+            <div class="ratio-16-9">
+                <img src="your-image.jpg" alt="hero">
+            </div>
+            <div class="headline-box glass">
+                <h5>Wellness therapy center</h5>
+                <h1>India's Future of<br>Preventive Healthcare</h1>
+                <p>AI Diagnostics + Ayurveda Healing + Modern Wellness</p>
+                <div class="hero-btns">
+                    <button class="btn glass-btn"><i class="fas fa-heartbeat"></i>Book Health Scan</button>
+                    <button class="btn glass-btn"><i class="fas fa-spa"></i>Start Center</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fixed Trust Indicators with White Icons -->
+        <div class="trust-row glass">
+            <div class="trust-item">
+                <i class="fas fa-flag"></i>
+                <span>1000 Centers</span>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-microchip"></i>
+                <span>AI Diagnostics</span>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-leaf"></i>
+                <span>Natural Therapies</span>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-user-md"></i>
+                <span>Doctor Network</span>
+            </div>
+        </div>
+
+        <div class="grid-4">
+            <div class="card glass"><i class="fas fa-stethoscope"></i><h4>Diagnostics</h4></div>
+            <div class="card glass"><i class="fas fa-hand-holding-heart"></i><h4>Therapies</h4></div>
+            <div class="card glass"><i class="fas fa-heartbeat"></i><h4>Disease Reversal</h4></div>
+            <div class="card glass"><i class="fas fa-video"></i><h4>Telemedicine</h4></div>
+        </div>
+
+        <div class="grid-3">
+            <div class="step glass"><span class="step-num">1</span><i class="fas fa-microscope"></i><p>AI Health Scan</p></div>
+            <div class="step glass"><span class="step-num">2</span><i class="fas fa-user-md"></i><p>Doctor Consultation</p></div>
+            <div class="step glass"><span class="step-num">3</span><i class="fas fa-spa"></i><p>Personalized Therapy</p></div>
+        </div>
+
+        <div class="grid-3">
+            <div class="pkg glass"><h4>Basic Scan</h4><span class="price">₹2500</span><button class="small-btn glass-btn"><i class="fas fa-shopping-cart"></i></button></div>
+            <div class="pkg glass popular"><h4>Detox Therapy</h4><span class="price">₹15000</span><button class="small-btn glass-btn"><i class="fas fa-shopping-cart"></i></button></div>
+            <div class="pkg glass"><h4>Diabetes Reversal</h4><span class="price">₹75000</span><button class="small-btn glass-btn"><i class="fas fa-shopping-cart"></i></button></div>
+        </div>
+
+        <div class="grid-2">
+            <div class="dual glass"><h4><i class="fas fa-store"></i>Start Center</h4><p>₹25L–50L</p><button class="small-btn glass-btn">Apply</button></div>
+            <div class="dual glass"><h4><i class="fas fa-handshake"></i>Partner</h4><p>₹11K</p><button class="small-btn glass-btn">Join</button></div>
+        </div>
+
+        <footer class="footer glass">
+            <div class="social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p>© 2024 VIDMOSS</p>
+        </footer>
+    </main>
+
+    <script>
+        const menuIcon = document.getElementById('menuIcon');
+        const menuPopup = document.getElementById('menuPopup');
+        const overlay = document.getElementById('overlay');
+        const mainContent = document.getElementById('mainContent');
+
+        menuIcon.addEventListener('click', () => {
+            menuIcon.classList.toggle('active');
+            menuPopup.classList.toggle('show');
+            overlay.classList.toggle('show');
+            mainContent.classList.toggle('blur');
+        });
+
+        overlay.addEventListener('click', () => {
+            menuIcon.classList.remove('active');
+            menuPopup.classList.remove('show');
+            overlay.classList.remove('show');
+            mainContent.classList.remove('blur');
+        });
+    </script>
+</body>
+</html>
