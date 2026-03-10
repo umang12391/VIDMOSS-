@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIDMOSS</title>
+    <title>VIDMOSS - Wellness Center</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Navbar -->
     <nav class="navbar">
-        <div class="logo">VIDMOSS</div>
+        <div class="logo-section">
+            <div class="logo">VIDMOSS</div>
+            <div class="logo-tagline">Wellness Center</div>
+        </div>
         <div class="menu-wrapper">
-            <button class="consult-btn"><i class="fas fa-calendar-check"></i>Book</button>
-            <div class="menu-icon" id="menuIcon">
-                <span></span><span></span><span></span>
-            </div>
+            <button class="nav-icon" title="Book"><i class="fas fa-calendar-check"></i></button>
+            <button class="nav-icon" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+            <button class="nav-icon" title="Call"><i class="fas fa-phone-alt"></i></button>
+            <div class="menu-icon" id="menuIcon"><span></span><span></span><span></span></div>
         </div>
     </nav>
 
+    <!-- Menu Popup -->
     <div class="menu-popup" id="menuPopup">
         <ul>
             <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
@@ -35,65 +40,115 @@
     <div class="overlay" id="overlay"></div>
 
     <main class="content" id="mainContent">
+        <!-- Hero Section with Right to Left Slider -->
         <div class="hero-box">
-            <div class="ratio-16-9">
-                <img src="your-image.jpg" alt="hero">
+            <div class="ratio-16-9 slider-container">
+                <div class="slider">
+                    <div class="slide active">
+                        <img src="image1.jpg" alt="hero 1">
+                    </div>
+                    <div class="slide">
+                        <img src="image2.jpg" alt="hero 2">
+                    </div>
+                    <div class="slide">
+                        <img src="image3.jpg" alt="hero 3">
+                    </div>
+                    <div class="slide">
+                        <img src="image4.jpg" alt="hero 4">
+                    </div>
+                    <div class="slide">
+                        <img src="image5.jpg" alt="hero 5">
+                    </div>
+                    <div class="slide">
+                        <img src="image6.jpg" alt="hero 6">
+                    </div>
+                </div>
+                <div class="slider-dots">
+                    <span class="dot active" data-index="0"></span>
+                    <span class="dot" data-index="1"></span>
+                    <span class="dot" data-index="2"></span>
+                    <span class="dot" data-index="3"></span>
+                    <span class="dot" data-index="4"></span>
+                    <span class="dot" data-index="5"></span>
+                </div>
             </div>
             <div class="headline-box glass">
-                <h5>Wellness therapy center</h5>
                 <h1>India's Future of<br>Preventive Healthcare</h1>
                 <p>AI Diagnostics + Ayurveda Healing + Modern Wellness</p>
                 <div class="hero-btns">
-                    <button class="btn glass-btn"><i class="fas fa-heartbeat"></i>Book Health Scan</button>
+                    <button class="btn glass-btn" onclick="window.open('booking.html', '_blank')"><i class="fas fa-heartbeat"></i>Book Health Scan</button>
                     <button class="btn glass-btn"><i class="fas fa-spa"></i>Start Center</button>
                 </div>
             </div>
         </div>
 
-        <!-- Fixed Trust Indicators with White Icons -->
+        <!-- Trust Indicators -->
         <div class="trust-row glass">
-            <div class="trust-item">
-                <i class="fas fa-flag"></i>
-                <span>1000 Centers</span>
+            <div class="trust-item"><i class="fas fa-flag"></i><span>1000 Centers</span></div>
+            <div class="trust-item"><i class="fas fa-microchip"></i><span>AI Diagnostics</span></div>
+            <div class="trust-item"><i class="fas fa-leaf"></i><span>Natural Therapies</span></div>
+            <div class="trust-item"><i class="fas fa-user-md"></i><span>Doctor Network</span></div>
+        </div>
+
+        <!-- Mini Packages - PERFECT ARRANGEMENT -->
+        <div class="mini-packages-container glass">
+            <h3 class="mini-packages-title">Wellness Packages</h3>
+            <div class="mini-packages-row">
+                <!-- LEFT: Basic Scan -->
+                <div class="mini-package-card">
+                    <h4 class="mini-package-name">Basic Scan</h4>
+                    <span class="mini-package-price">₹2500</span>
+                </div>
+                
+                <!-- CENTER: Detox Therapy (Popular) -->
+                <div class="mini-package-card popular-mini">
+                    <h4 class="mini-package-name">Detox Therapy</h4>
+                    <span class="mini-package-price">₹15000</span>
+                </div>
+                
+                <!-- RIGHT: Diabetes Reversal -->
+                <div class="mini-package-card">
+                    <h4 class="mini-package-name">Diabetes Reversal</h4>
+                    <span class="mini-package-price">₹75000</span>
+                </div>
             </div>
-            <div class="trust-item">
-                <i class="fas fa-microchip"></i>
-                <span>AI Diagnostics</span>
+        </div>
+
+        <!-- Three Boxes -->
+        <div class="three-boxes-container glass">
+            <div class="three-box-card">
+                <div class="three-box-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <div class="three-box-content">
+                    <h4>Ayurvedic</h4>
+                    <span class="three-box-value">₹25L–50L</span>
+                </div>
+                <button class="three-box-btn glass-btn">Apply</button>
             </div>
-            <div class="trust-item">
-                <i class="fas fa-leaf"></i>
-                <span>Natural Therapies</span>
+            <div class="three-box-card">
+                <div class="three-box-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="three-box-content">
+                    <h4>MSPNM</h4>
+                    <span class="three-box-value">Partner</span>
+                </div>
+                <button class="three-box-btn glass-btn">Join</button>
             </div>
-            <div class="trust-item">
-                <i class="fas fa-user-md"></i>
-                <span>Doctor Network</span>
+            <div class="three-box-card">
+                <div class="three-box-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="three-box-content">
+                    <h4>Leader Group</h4>
+                    <span class="three-box-value">₹11K</span>
+                </div>
+                <button class="three-box-btn glass-btn">Join</button>
             </div>
         </div>
 
-        <div class="grid-4">
-            <div class="card glass"><i class="fas fa-stethoscope"></i><h4>Diagnostics</h4></div>
-            <div class="card glass"><i class="fas fa-hand-holding-heart"></i><h4>Therapies</h4></div>
-            <div class="card glass"><i class="fas fa-heartbeat"></i><h4>Disease Reversal</h4></div>
-            <div class="card glass"><i class="fas fa-video"></i><h4>Telemedicine</h4></div>
-        </div>
-
-        <div class="grid-3">
-            <div class="step glass"><span class="step-num">1</span><i class="fas fa-microscope"></i><p>AI Health Scan</p></div>
-            <div class="step glass"><span class="step-num">2</span><i class="fas fa-user-md"></i><p>Doctor Consultation</p></div>
-            <div class="step glass"><span class="step-num">3</span><i class="fas fa-spa"></i><p>Personalized Therapy</p></div>
-        </div>
-
-        <div class="grid-3">
-            <div class="pkg glass"><h4>Basic Scan</h4><span class="price">₹2500</span><button class="small-btn glass-btn"><i class="fas fa-shopping-cart"></i></button></div>
-            <div class="pkg glass popular"><h4>Detox Therapy</h4><span class="price">₹15000</span><button class="small-btn glass-btn"><i class="fas fa-shopping-cart"></i></button></div>
-            <div class="pkg glass"><h4>Diabetes Reversal</h4><span class="price">₹75000</span><button class="small-btn glass-btn"><i class="fas fa-shopping-cart"></i></button></div>
-        </div>
-
-        <div class="grid-2">
-            <div class="dual glass"><h4><i class="fas fa-store"></i>Start Center</h4><p>₹25L–50L</p><button class="small-btn glass-btn">Apply</button></div>
-            <div class="dual glass"><h4><i class="fas fa-handshake"></i>Partner</h4><p>₹11K</p><button class="small-btn glass-btn">Join</button></div>
-        </div>
-
+        <!-- Footer -->
         <footer class="footer glass">
             <div class="social">
                 <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -105,25 +160,99 @@
         </footer>
     </main>
 
-    <script>
-        const menuIcon = document.getElementById('menuIcon');
-        const menuPopup = document.getElementById('menuPopup');
-        const overlay = document.getElementById('overlay');
-        const mainContent = document.getElementById('mainContent');
+<script>
+    // Menu functionality - FULL SIZE POPUP + BACKGROUND STOP
+    const menuIcon = document.getElementById('menuIcon');
+    const menuPopup = document.getElementById('menuPopup');
+    const overlay = document.getElementById('overlay');
+    const mainContent = document.getElementById('mainContent');
+    const body = document.body;
 
-        menuIcon.addEventListener('click', () => {
-            menuIcon.classList.toggle('active');
-            menuPopup.classList.toggle('show');
-            overlay.classList.toggle('show');
-            mainContent.classList.toggle('blur');
-        });
+    // Create close button inside menu
+    const closeBtn = document.createElement('div');
+    closeBtn.className = 'close-menu';
+    closeBtn.innerHTML = '×';
+    menuPopup.appendChild(closeBtn);
 
-        overlay.addEventListener('click', () => {
-            menuIcon.classList.remove('active');
-            menuPopup.classList.remove('show');
-            overlay.classList.remove('show');
-            mainContent.classList.remove('blur');
+    function openMenu() {
+        menuIcon.classList.add('active');
+        menuPopup.classList.add('show');
+        overlay.classList.add('show');
+        mainContent.classList.add('blur');
+        body.classList.add('menu-open');  // Background scroll band
+    }
+
+    function closeMenu() {
+        menuIcon.classList.remove('active');
+        menuPopup.classList.remove('show');
+        overlay.classList.remove('show');
+        mainContent.classList.remove('blur');
+        body.classList.remove('menu-open');  // Background scroll wapas
+    }
+
+    menuIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openMenu();
+    });
+
+    closeBtn.addEventListener('click', () => {
+        closeMenu();
+    });
+
+    overlay.addEventListener('click', () => {
+        closeMenu();
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menuPopup.classList.contains('show')) {
+            closeMenu();
+        }
+    });
+
+    // Image Slider with Right to Left Animation
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+    let slideInterval;
+
+    function showSlide(index) {
+        slides.forEach(slide => {
+            slide.classList.remove('active', 'prev');
         });
-    </script>
+        dots.forEach(dot => dot.classList.remove('active'));
+        
+        if (slides[currentSlide]) {
+            slides[currentSlide].classList.add('prev');
+        }
+        
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        currentSlide = index;
+    }
+
+    function nextSlide() {
+        let next = (currentSlide + 1) % slides.length;
+        showSlide(next);
+    }
+
+    function startSlider() {
+        slideInterval = setInterval(nextSlide, 4000);
+    }
+
+    function stopSlider() {
+        clearInterval(slideInterval);
+    }
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            stopSlider();
+            showSlide(index);
+            startSlider();
+        });
+    });
+
+    startSlider();
+</script>
 </body>
 </html>
