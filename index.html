@@ -1,258 +1,459 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIDMOSS - Wellness Center</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>VIDMOSS · wellness & business network</title>
+  <!-- Tailwind via CDN (v3) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- soft corporate wellness theme -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap');
+    * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    body { 
+      background: linear-gradient(145deg, #f0f9f0 0%, #e2f0e2 100%);
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+    }
+    .card-shadow { box-shadow: 0 15px 30px -10px rgba(40, 70, 50, 0.12); }
+    .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 25px 35px -12px rgba(30, 70, 50, 0.2); }
+    .nav-link { position: relative; transition: color 0.2s; }
+    .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background: #1f6e43; transition: width 0.2s; }
+    .nav-link:hover::after { width: 100%; }
+    
+    /* Mobile menu fixed overlay */
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.3);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 35;
+      backdrop-filter: blur(2px);
+    }
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* Mobile menu panel - right side sliding */
+    .mobile-menu-panel {
+      position: fixed;
+      top: 0;
+      right: -280px;
+      width: 260px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+      z-index: 40;
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 6rem 1.5rem 2rem 1.5rem;
+      overflow-y: auto;
+    }
+    .mobile-menu-panel.open {
+      right: 0;
+    }
+    
+    /* hamburger lines animation */
+    .hamburger-line { transition: all 0.2s; }
+    .hamburger-active .line1 { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger-active .line2 { opacity: 0; }
+    .hamburger-active .line3 { transform: rotate(-45deg) translate(5px, -5px); }
+    
+    /* gallery hover zoom */
+    .gallery-zoom { overflow: hidden; border-radius: 1rem; }
+    .gallery-zoom img { transition: transform 0.4s ease; width: 100%; height: 100%; object-fit: cover; }
+    .gallery-zoom:hover img { transform: scale(1.05); }
+    
+    /* Fix for body scroll when menu open */
+    body.menu-open {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+    }
+
+    /* ========== ENHANCED BUTTON ANIMATIONS ========== */
+    .btn-glow {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
+    
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+      z-index: -1;
+      opacity: 0;
+    }
+    
+    .btn-glow:hover::before {
+      width: 300px;
+      height: 300px;
+      opacity: 0.4;
+    }
+    
+    .btn-glow:active {
+      transform: scale(0.97);
+    }
+    
+    /* floating animation for subtle attention */
+    @keyframes gentle-float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-3px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .btn-float {
+      animation: gentle-float 4s ease-in-out infinite;
+    }
+    
+    .btn-float:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+    
+    .btn-float:nth-child(3) {
+      animation-delay: 1s;
+    }
+    
+    /* shine effect on hover */
+    .btn-shine {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-shine::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 50%;
+      height: 200%;
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+      transform: skewX(-25deg);
+      transition: left 0.7s ease;
+      pointer-events: none;
+    }
+    
+    .btn-shine:hover::after {
+      left: 120%;
+    }
+    
+    /* gradient border animation for outline button */
+    .btn-gradient-border {
+      position: relative;
+      background-clip: padding-box;
+      border: 2px solid transparent;
+      border-radius: 9999px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-gradient-border::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(90deg, #1c5a3a, #2e8b57, #1c5a3a);
+      border-radius: 9999px;
+      z-index: -1;
+      background-size: 200% 100%;
+      animation: border-move 3s linear infinite;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .btn-gradient-border:hover::before {
+      opacity: 1;
+    }
+    
+    @keyframes border-move {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+    
+    /* pulse glow for primary button */
+    .btn-pulse {
+      box-shadow: 0 0 0 0 rgba(28, 90, 58, 0.5);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(28, 90, 58, 0.5); }
+      70% { box-shadow: 0 0 0 10px rgba(28, 90, 58, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(28, 90, 58, 0); }
+    }
+    
+    /* soft shadow hover */
+    .btn-soft {
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    .btn-soft:hover {
+      box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
+      transform: translateY(-5px);
+    }
+  </style>
 </head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="logo-section">
-            <div class="logo">VIDMOSS</div>
-            <div class="logo-tagline">Wellness Center</div>
-        </div>
-        <div class="menu-wrapper">
-            <button class="nav-icon" title="Book"><i class="fas fa-calendar-check"></i></button>
-            <button class="nav-icon" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
-            <button class="nav-icon" title="Call"><i class="fas fa-phone-alt"></i></button>
-            <div class="menu-icon" id="menuIcon"><span></span><span></span><span></span></div>
-        </div>
-    </nav>
+<body class="antialiased text-gray-800">
 
-    <!-- Menu Popup -->
-    <div class="menu-popup" id="menuPopup">
-        <ul>
-            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
-            <li><a href="#"><i class="fas fa-hand-holding-heart"></i> Services</a></li>
-            <li><a href="#"><i class="fas fa-spa"></i> Wellness Centers</a></li>
-            <li><a href="#"><i class="fas fa-briefcase"></i> Business Opportunity</a></li>
-            <li><a href="#"><i class="fas fa-handshake"></i> Partner Program</a></li>
-            <li><a href="#"><i class="fas fa-chart-line"></i> Investors</a></li>
-            <li><a href="#"><i class="fas fa-blog"></i> Blog</a></li>
-            <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
-        </ul>
+  <!-- Mobile Menu Overlay (background blur) -->
+  <div id="menuOverlay" class="mobile-menu-overlay md:hidden" onclick="closeMenu()"></div>
+  
+  <!-- Mobile Menu Panel -->
+  <div id="mobileMenuPanel" class="mobile-menu-panel md:hidden flex flex-col space-y-6 text-lg font-medium text-gray-800">
+    <a href="#" class="hover:text-[#1c5a3a] transition py-2 border-b border-gray-100" onclick="closeMenu()">Home</a>
+    <a href="#" class="hover:text-[#1c5a3a] transition py-2 border-b border-gray-100" onclick="closeMenu()">Services</a>
+    <a href="#" class="hover:text-[#1c5a3a] transition py-2 border-b border-gray-100" onclick="closeMenu()">Diagnostics</a>
+    <a href="#" class="hover:text-[#1c5a3a] transition py-2 border-b border-gray-100" onclick="closeMenu()">Partner</a>
+    <a href="#" class="hover:text-[#1c5a3a] transition py-2 border-b border-gray-100" onclick="closeMenu()">Gallery</a>
+    <a href="#" class="hover:text-[#1c5a3a] transition py-2 border-b border-gray-100" onclick="closeMenu()">Contact</a>
+  </div>
+
+  <!-- STICKY NAVBAR -->
+  <nav class="sticky top-0 z-30 bg-white/80 backdrop-blur-sm border-b border-white/40 card-shadow">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 flex items-center justify-between h-16 md:h-20">
+      <!-- left logo -->
+      <div class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1c5a3a]">VIDMOSS</div>
+
+      <!-- desktop right links (hidden on mobile) -->
+      <div class="hidden md:flex space-x-8 lg:space-x-10 text-[15px] font-medium text-gray-700">
+        <a href="#" class="nav-link">Home</a>
+        <a href="#" class="nav-link">Services</a>
+        <a href="#" class="nav-link">Diagnostics</a>
+        <a href="#" class="nav-link">Partner</a>
+        <a href="#" class="nav-link">Gallery</a>
+        <a href="#" class="nav-link">Contact</a>
+      </div>
+
+      <!-- hamburger mobile icon -->
+      <button id="hamburgerBtn" class="md:hidden w-10 h-10 flex flex-col justify-center items-center space-y-1.5 group focus:outline-none relative z-50">
+        <span class="hamburger-line line1 w-7 h-0.5 bg-[#1c5a3a] rounded-full block transition"></span>
+        <span class="hamburger-line line2 w-7 h-0.5 bg-[#1c5a3a] rounded-full block transition"></span>
+        <span class="hamburger-line line3 w-7 h-0.5 bg-[#1c5a3a] rounded-full block transition"></span>
+      </button>
     </div>
+  </nav>
 
-    <div class="overlay" id="overlay"></div>
-
-    <main class="content" id="mainContent">
-        <!-- Hero Section with Right to Left Slider -->
-        <div class="hero-box">
-            <div class="ratio-16-9 slider-container">
-                <div class="slider">
-                    <div class="slide active">
-                        <img src="image1.jpg" alt="hero 1">
-                    </div>
-                    <div class="slide">
-                        <img src="image2.jpg" alt="hero 2">
-                    </div>
-                    <div class="slide">
-                        <img src="image3.jpg" alt="hero 3">
-                    </div>
-                    <div class="slide">
-                        <img src="image4.jpg" alt="hero 4">
-                    </div>
-                    <div class="slide">
-                        <img src="image5.jpg" alt="hero 5">
-                    </div>
-                    <div class="slide">
-                        <img src="image6.jpg" alt="hero 6">
-                    </div>
-                </div>
-                <div class="slider-dots">
-                    <span class="dot active" data-index="0"></span>
-                    <span class="dot" data-index="1"></span>
-                    <span class="dot" data-index="2"></span>
-                    <span class="dot" data-index="3"></span>
-                    <span class="dot" data-index="4"></span>
-                    <span class="dot" data-index="5"></span>
-                </div>
-            </div>
-            <div class="headline-box glass">
-                <h1>India's Future of<br>Preventive Healthcare</h1>
-                <p>AI Diagnostics + Ayurveda Healing + Modern Wellness</p>
-                <div class="hero-btns">
-                    <button class="btn glass-btn" onclick="window.open('booking.html', '_blank')"><i class="fas fa-heartbeat"></i>Book Health Scan</button>
-                    <button class="btn glass-btn"><i class="fas fa-spa"></i>Start Center</button>
-                </div>
-            </div>
+  <main class="max-w-7xl mx-auto px-5 md:px-8 py-6 md:py-10 w-full overflow-x-hidden">
+    <!-- HERO SECTION: image background with centered buttons near bottom (two rows, pill shape) -->
+    <section class="relative rounded-3xl overflow-hidden card-shadow mb-16 hover-lift min-h-[400px] md:min-h-[500px] flex items-end justify-center">
+      <!-- large background image (wellness building + nature) -->
+      <img src="image1.jpg" alt="Wellness building with nature" class="absolute inset-0 w-full h-full object-cover">
+      <!-- soft gradient overlay for better button readability (optional) -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+      
+      <!-- BUTTON GROUP: centered horizontally, positioned near bottom with slight spacing from edge -->
+      <!-- Using responsive padding: same structure on mobile and desktop -->
+      <div class="relative z-10 w-full flex flex-col items-center justify-end pb-8 sm:pb-10 md:pb-12 lg:pb-16 px-4">
+        <!-- First row: two buttons side by side with ENHANCED ANIMATIONS -->
+        <div class="flex flex-row flex-wrap justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+          <!-- Book Health Scan - primary green button with multiple animations -->
+          <button class="btn-glow btn-shine btn-pulse btn-float bg-[#1c5a3a] text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold shadow-md hover:bg-[#14532d] transition transform hover:scale-105 min-w-[140px] sm:min-w-[160px] whitespace-nowrap relative overflow-hidden">
+            <span class="relative z-10">Book Health Scan</span>
+          </button>
+          
+          <!-- Start Wellness Center - outline button with gradient border animation -->
+          <button class="btn-glow btn-gradient-border btn-float bg-white text-[#1c5a3a] border-2 border-[#1c5a3a] px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold hover:bg-[#ecf9ec] transition transform hover:scale-105 min-w-[160px] sm:min-w-[180px] whitespace-nowrap relative">
+            Start Wellness Center
+          </button>
         </div>
-
-        <!-- Trust Indicators -->
-        <div class="trust-row glass">
-            <div class="trust-item"><i class="fas fa-flag"></i><span>1000 Centers</span></div>
-            <div class="trust-item"><i class="fas fa-microchip"></i><span>AI Diagnostics</span></div>
-            <div class="trust-item"><i class="fas fa-leaf"></i><span>Natural Therapies</span></div>
-            <div class="trust-item"><i class="fas fa-user-md"></i><span>Doctor Network</span></div>
+        <!-- Second row: single button centered - now Join Partner (light green/off-white style) with animations -->
+        <div class="flex justify-center">
+          <button class="btn-glow btn-shine btn-float btn-soft bg-[#e9f2e9] text-[#1c5a3a] border border-[#1c5a3a] px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold hover:bg-white transition transform hover:scale-105 shadow-md min-w-[150px] sm:min-w-[160px] whitespace-nowrap relative overflow-hidden">
+            <span class="relative z-10">Join Partner</span>
+          </button>
         </div>
+      </div>
+    </section>
 
-        <!-- Mini Packages - PERFECT ARRANGEMENT -->
-        <div class="mini-packages-container glass">
-            <h3 class="mini-packages-title">Wellness Packages</h3>
-            <div class="mini-packages-row">
-                <!-- LEFT: Basic Scan -->
-                <div class="mini-package-card">
-                    <h4 class="mini-package-name">Basic Scan</h4>
-                    <span class="mini-package-price">₹2500</span>
-                </div>
-                
-                <!-- CENTER: Detox Therapy (Popular) -->
-                <div class="mini-package-card popular-mini">
-                    <h4 class="mini-package-name">Detox Therapy</h4>
-                    <span class="mini-package-price">₹15000</span>
-                </div>
-                
-                <!-- RIGHT: Diabetes Reversal -->
-                <div class="mini-package-card">
-                    <h4 class="mini-package-name">Diabetes Reversal</h4>
-                    <span class="mini-package-price">₹75000</span>
-                </div>
-            </div>
+    <!-- ADVANCED HEALTH DIAGNOSTICS -->
+    <section class="grid md:grid-cols-2 gap-8 items-center mb-20">
+      <div class="space-y-5">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">Advanced Health <span class="text-[#1c5a3a]">Diagnostics</span></h2>
+        <p class="text-xl text-gray-600">AI Based Wellness Analysis</p>
+        <ul class="space-y-3 text-gray-700">
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>AI Nadi Tarangini Scan</li>
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Quantum Health Scan</li>
+          <li class="flex items-center gap-2"><svg class="w-5 h-5 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Aura Energy Analysis</li>
+        </ul>
+        <button class="bg-[#1c5a3a] text-white px-7 py-3 rounded-full font-semibold shadow-md hover:bg-[#14532d] transition inline-block">View Diagnostics →</button>
+      </div>
+      <div class="rounded-2xl overflow-hidden card-shadow hover-lift">
+        <img src="diagnostics.jpg" alt="futuristic health scanner" class="w-full h-80 object-cover">
+      </div>
+    </section>
+
+    <!-- INTEGRATED SERVICES SECTION -->
+    <section class="mb-20">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-10 text-center">VIDMOSS Integrated Services Network</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- card 1: wellness -->
+        <div class="bg-white/80 backdrop-blur-sm p-7 rounded-3xl card-shadow hover-lift">
+          <div class="flex items-center gap-2 mb-4"><svg class="w-6 h-6 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg><span class="text-lg font-semibold text-gray-800">Wellness & Diagnostics</span></div>
+          <ul class="space-y-2 text-gray-700 mb-6">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>AI Diagnostics</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>Panchakarma Therapy</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>Detox Therapy</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>Stress Management</li>
+          </ul>
+          <button class="bg-[#1c5a3a] text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow hover:bg-[#14532d] transition">View Diagnostics</button>
         </div>
-
-        <!-- Three Boxes -->
-        <div class="three-boxes-container glass">
-            <div class="three-box-card">
-                <div class="three-box-icon">
-                    <i class="fas fa-leaf"></i>
-                </div>
-                <div class="three-box-content">
-                    <h4>Ayurvedic</h4>
-                    <span class="three-box-value">₹25L–50L</span>
-                </div>
-                <button class="three-box-btn glass-btn">Apply</button>
-            </div>
-            <div class="three-box-card">
-                <div class="three-box-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="three-box-content">
-                    <h4>MSPNM</h4>
-                    <span class="three-box-value">Partner</span>
-                </div>
-                <button class="three-box-btn glass-btn">Join</button>
-            </div>
-            <div class="three-box-card">
-                <div class="three-box-icon">
-                    <i class="fas fa-crown"></i>
-                </div>
-                <div class="three-box-content">
-                    <h4>Leader Group</h4>
-                    <span class="three-box-value">₹11K</span>
-                </div>
-                <button class="three-box-btn glass-btn">Join</button>
-            </div>
+        <!-- card 2: business -->
+        <div class="bg-white/80 backdrop-blur-sm p-7 rounded-3xl card-shadow hover-lift">
+          <div class="flex items-center gap-2 mb-4"><svg class="w-6 h-6 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg><span class="text-lg font-semibold text-gray-800">Business Network</span></div>
+          <ul class="space-y-2 text-gray-700 mb-6">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>Building Construction</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>Solar Projects</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>Loans & Insurance</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>Education & Career</li>
+          </ul>
+          <button class="bg-[#1c5a3a] text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow hover:bg-[#14532d] transition">Explore Business →</button>
         </div>
+      </div>
+    </section>
 
-        <!-- Footer -->
-        <footer class="footer glass">
-            <div class="social">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-            <p>© 2024 VIDMOSS</p>
-        </footer>
-    </main>
+    <!-- PARTNER NETWORK -->
+    <section class="mb-20">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-3 text-center">Earn with VIDMOSS Partner Network</h2>
+      <p class="text-center text-gray-600 mb-10">Choose your wellness vertical and grow</p>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div class="bg-white/70 backdrop-blur-sm p-5 rounded-2xl card-shadow hover-lift flex flex-col items-center text-center gap-2">
+          <svg class="w-8 h-8 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span class="font-medium text-gray-800">Panchakarma Therapy</span>
+        </div>
+        <div class="bg-white/70 backdrop-blur-sm p-5 rounded-2xl card-shadow hover-lift flex flex-col items-center text-center gap-2">
+          <svg class="w-8 h-8 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+          <span class="font-medium text-gray-800">Detox Therapy</span>
+        </div>
+        <div class="bg-white/70 backdrop-blur-sm p-5 rounded-2xl card-shadow hover-lift flex flex-col items-center text-center gap-2">
+          <svg class="w-8 h-8 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+          <span class="font-medium text-gray-800">Weight Loss Program</span>
+        </div>
+        <div class="bg-white/70 backdrop-blur-sm p-5 rounded-2xl card-shadow hover-lift flex flex-col items-center text-center gap-2">
+          <svg class="w-8 h-8 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+          <span class="font-medium text-gray-800">Tele-Doc</span>
+        </div>
+        <div class="bg-white/70 backdrop-blur-sm p-5 rounded-2xl card-shadow hover-lift flex flex-col items-center text-center gap-2">
+          <svg class="w-8 h-8 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+          <span class="font-medium text-gray-800">Medicine Delivery</span>
+        </div>
+      </div>
+    </section>
 
-<script>
-    // Menu functionality - FULL SIZE POPUP + BACKGROUND STOP
-    const menuIcon = document.getElementById('menuIcon');
-    const menuPopup = document.getElementById('menuPopup');
-    const overlay = document.getElementById('overlay');
-    const mainContent = document.getElementById('mainContent');
-    const body = document.body;
+    <!-- PHOTO GALLERY -->
+    <section class="mb-20">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8 text-center">Wellness Gallery</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <div class="gallery-zoom card-shadow rounded-2xl aspect-square"><img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=2070&auto=format&fit=crop" alt="yoga" loading="lazy"></div>
+        <div class="gallery-zoom card-shadow rounded-2xl aspect-square"><img src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?q=80&w=2070&auto=format&fit=crop" alt="therapy" loading="lazy"></div>
+        <div class="gallery-zoom card-shadow rounded-2xl aspect-square"><img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2022&auto=format&fit=crop" alt="meditation" loading="lazy"></div>
+        <div class="gallery-zoom card-shadow rounded-2xl aspect-square"><img src="https://images.unsplash.com/photo-1519823551278-64ac92734ab6?q=80&w=1974&auto=format&fit=crop" alt="wellness center" loading="lazy"></div>
+        <div class="gallery-zoom card-shadow rounded-2xl aspect-square"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070&auto=format&fit=crop" alt="fitness" loading="lazy"></div>
+        <div class="gallery-zoom card-shadow rounded-2xl aspect-square"><img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=2068&auto=format&fit=crop" alt="detox" loading="lazy"></div>
+      </div>
+    </section>
+  </main>
 
-    // Create close button inside menu
-    const closeBtn = document.createElement('div');
-    closeBtn.className = 'close-menu';
-    closeBtn.innerHTML = '×';
-    menuPopup.appendChild(closeBtn);
+  <!-- FOOTER -->
+  <footer class="bg-white/70 backdrop-blur-sm border-t border-white/40 py-12 px-5 md:px-8 rounded-t-3xl card-shadow w-full">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8">
+      <div>
+        <div class="text-2xl font-semibold text-[#1c5a3a] mb-4">VIDMOSS</div>
+        <p class="text-gray-600 text-sm">Wellness & Business Network<br>Integrated platform for health & growth.</p>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-800 mb-3">Quick links</h4>
+        <ul class="space-y-2 text-gray-600 text-sm">
+          <li><a href="#" class="hover:text-[#1c5a3a]">Home</a></li>
+          <li><a href="#" class="hover:text-[#1c5a3a]">Services</a></li>
+          <li><a href="#" class="hover:text-[#1c5a3a]">Diagnostics</a></li>
+          <li><a href="#" class="hover:text-[#1c5a3a]">Partner</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-800 mb-3">Services links</h4>
+        <ul class="space-y-2 text-gray-600 text-sm">
+          <li><a href="#" class="hover:text-[#1c5a3a]">AI Diagnostics</a></li>
+          <li><a href="#" class="hover:text-[#1c5a3a]">Panchakarma</a></li>
+          <li><a href="#" class="hover:text-[#1c5a3a]">Solar Projects</a></li>
+          <li><a href="#" class="hover:text-[#1c5a3a]">Education & Career</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-800 mb-3">Contact</h4>
+        <ul class="space-y-2 text-gray-600 text-sm">
+          <li>VIDMOSS</li>
+          <li>+91 7307062500</li>
+          <li>uttar pradesh | kanpur</li>
+        </ul>
+        <div class="flex gap-4 mt-4">
+          <svg class="w-5 h-5 text-[#1c5a3a] hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.56v14.91A4.53 4.53 0 0119.44 24H4.56A4.53 4.53 0 010 19.44V4.56A4.53 4.53 0 014.56 0h14.91A4.53 4.53 0 0124 4.56zM19.06 4h-2.62a4.93 4.93 0 00-4.93 4.93v2.62h-2.6v3.54h2.6v7.08h3.55v-7.08h2.62l.41-3.54h-3.03V8.93c0-.79.64-1.43 1.43-1.43h1.57V4z"/></svg>
+          <svg class="w-5 h-5 text-[#1c5a3a] hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 001.88-2.37 8.6 8.6 0 01-2.72 1.04 4.27 4.27 0 00-7.28 3.9A12.13 12.13 0 013 4.1a4.27 4.27 0 001.32 5.7 4.25 4.25 0 01-1.94-.54v.05a4.28 4.28 0 003.42 4.2 4.3 4.3 0 01-1.93.07 4.28 4.28 0 004 2.98A8.6 8.6 0 012 19.54a12.07 12.07 0 006.55 1.92c7.86 0 12.15-6.5 12.15-12.15 0-.18-.01-.37-.02-.55A8.68 8.68 0 0024 5.56a8.57 8.57 0 01-2.54.7z"/></svg>
+          <svg class="w-5 h-5 text-[#1c5a3a] hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.06 1.96.25 2.66.52.73.28 1.36.66 1.98 1.28a5.8 5.8 0 011.28 1.98c.27.7.46 1.49.52 2.66.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.06 1.17-.25 1.96-.52 2.66a5.8 5.8 0 01-1.28 1.98c-.62.62-1.25 1-1.98 1.28-.7.27-1.49.46-2.66.52-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.06-1.96-.25-2.66-.52a5.8 5.8 0 01-1.98-1.28 5.8 5.8 0 01-1.28-1.98c-.27-.7-.46-1.49-.52-2.66-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.06-1.17.25-1.96.52-2.66a5.8 5.8 0 011.28-1.98A5.8 5.8 0 014.5 2.75c.7-.27 1.49-.46 2.66-.52C8.43 2.17 8.81 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.75.13 4.9.33 4.05.7 3.2 1.06 2.37 1.6 1.6 2.37A7.8 7.8 0 00.07 4.05C-.01 4.9-.01 5.75-.01 7.05v9.9c0 1.3.02 2.15.08 3 .06 1.3.26 2.15.63 3 .36.85.9 1.68 1.67 2.45a7.8 7.8 0 002.45 1.67c.85.37 1.7.57 3 .63 1.3.06 1.7.07 3 .07h9.9c1.3 0 2.15-.01 3-.07 1.3-.06 2.15-.26 3-.63a7.8 7.8 0 002.45-1.67 7.8 7.8 0 001.67-2.45c.37-.85.57-1.7.63-3 .06-1.3.07-1.7.07-3V7.05c0-1.3-.01-2.15-.07-3-.06-1.3-.26-2.15-.63-3a7.8 7.8 0 00-1.67-2.45A7.8 7.8 0 0019.95.07C18.65-.01 17.8-.01 16.5-.01H7.05C5.75-.01 4.9 0 4.05.07 3.2.13 2.35.33 1.5.7.65 1.06-.18 1.6-.95 2.37A7.8 7.8 0 00-1.62 4.05C-1.7 4.9-1.7 5.75-1.7 7.05v9.9z"/><path d="M12 5.84A6.16 6.16 0 1018.16 12 6.16 6.16 0 0012 5.84zM12 16a4 4 0 114-4 4 4 0 01-4 4z"/><circle cx="18.4" cy="5.6" r="1.44"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-sm text-gray-500 mt-12">© VIDMOSS – Wellness & Business Network</div>
+  </footer>
 
-    function openMenu() {
-        menuIcon.classList.add('active');
-        menuPopup.classList.add('show');
-        overlay.classList.add('show');
-        mainContent.classList.add('blur');
-        body.classList.add('menu-open');  // Background scroll band
-    }
-
-    function closeMenu() {
-        menuIcon.classList.remove('active');
-        menuPopup.classList.remove('show');
-        overlay.classList.remove('show');
-        mainContent.classList.remove('blur');
-        body.classList.remove('menu-open');  // Background scroll wapas
-    }
-
-    menuIcon.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openMenu();
-    });
-
-    closeBtn.addEventListener('click', () => {
-        closeMenu();
-    });
-
-    overlay.addEventListener('click', () => {
-        closeMenu();
-    });
-
-    // Close on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && menuPopup.classList.contains('show')) {
+  <!-- JavaScript: mobile menu -->
+  <script>
+    (function() {
+      const hamburger = document.getElementById('hamburgerBtn');
+      const menuPanel = document.getElementById('mobileMenuPanel');
+      const overlay = document.getElementById('menuOverlay');
+      const body = document.body;
+      
+      function openMenu() {
+        menuPanel.classList.add('open');
+        overlay.classList.add('active');
+        hamburger.classList.add('hamburger-active');
+        body.classList.add('menu-open');
+      }
+      
+      function closeMenu() {
+        menuPanel.classList.remove('open');
+        overlay.classList.remove('active');
+        hamburger.classList.remove('hamburger-active');
+        body.classList.remove('menu-open');
+      }
+      
+      if (hamburger && menuPanel && overlay) {
+        hamburger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (menuPanel.classList.contains('open')) {
             closeMenu();
-        }
-    });
-
-    // Image Slider with Right to Left Animation
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.dot');
-    let currentSlide = 0;
-    let slideInterval;
-
-    function showSlide(index) {
-        slides.forEach(slide => {
-            slide.classList.remove('active', 'prev');
+          } else {
+            openMenu();
+          }
         });
-        dots.forEach(dot => dot.classList.remove('active'));
         
-        if (slides[currentSlide]) {
-            slides[currentSlide].classList.add('prev');
+        overlay.addEventListener('click', closeMenu);
+        menuPanel.addEventListener('click', (e) => e.stopPropagation());
+      }
+      
+      window.addEventListener('resize', function() {
+        if (window.innerWidth >= 768 && menuPanel?.classList.contains('open')) {
+          closeMenu();
         }
-        
-        slides[index].classList.add('active');
-        dots[index].classList.add('active');
-        currentSlide = index;
-    }
-
-    function nextSlide() {
-        let next = (currentSlide + 1) % slides.length;
-        showSlide(next);
-    }
-
-    function startSlider() {
-        slideInterval = setInterval(nextSlide, 4000);
-    }
-
-    function stopSlider() {
-        clearInterval(slideInterval);
-    }
-
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            stopSlider();
-            showSlide(index);
-            startSlider();
-        });
-    });
-
-    startSlider();
-</script>
+      });
+    })();
+  </script>
 </body>
-    </html>
+              </html>
