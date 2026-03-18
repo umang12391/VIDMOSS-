@@ -25,7 +25,16 @@
       color: #1f2937;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      /* ⭐ Important: body ko padding top dena hoga taaki fixed navbar content ko cover na kare */
+      padding-top: 80px; /* navbar ki height ke barabar */
     }
+    
+    @media (min-width: 768px) {
+      body {
+        padding-top: 96px; /* md screen par navbar ki height zyada hai */
+      }
+    }
+    
     a {
       text-decoration: none;
       color: inherit;
@@ -276,17 +285,50 @@
       stroke-width: 2;
     }
 
+    /* ⭐ FIXED NAVBAR STYLES */
+    .navbar-fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      margin-top: 0; /* override margin-top */
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%;
+      border-radius: 0 !important;
+      border-left: none;
+      border-right: none;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .navbar-fixed .nav-container {
+      max-width: 80rem;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+    
+    @media (min-width: 768px) {
+      .navbar-fixed .nav-container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
+    }
+
     /* Full-width menu panel (left to right) - adjusted to navbar width */
     #menuPanel {
       display: none;
       position: absolute;
-      top: calc(91% + 6px);   /* slightly below navbar */
+      top: 102%;   /* exactly at bottom of navbar */
       left: 0;
       right: 0;
-      width: 100%;              /* takes full width of nav container */
+      width: 100%;
       background: rgba(255, 255, 255, 0.97);
       backdrop-filter: blur(8px);
-      border: 2px solid #1c5a3a;
+      border: 1.5px solid #1c5a3a;
+      border-top: none;
       box-shadow: 0 20px 30px -10px rgba(28, 90, 58, 0.3);
       z-index: 100;
       overflow: hidden;
@@ -295,7 +337,7 @@
       display: block;
     }
     .menu-item {
-      padding: 1rem 1.75rem;    /* larger tap area */
+      padding: 1rem 1.75rem;
       transition: background 0.2s, color 0.2s;
       color: #1f2937;
       font-weight: 500;
@@ -313,25 +355,19 @@
     /* Navbar container relative for absolute menu */
     .nav-container {
       position: relative;
+      width: 100%;
     }
 
     /* ---------- FULL-WIDTH STATELINE (edge to edge, thinner) ---------- */
     .stateline {
-      width: 100vw;             /* full viewport width */
-      height: 1px;              /* reduced from 6px to 2px — kam height */
-      background-color: #1c5a3a; /* green */
-      margin-left: calc(-50vw + 50%); /* hack to counteract parent padding, centers and stretches full width */
+      width: 200vw;
+      height: 1px;
+      background-color: #1c5a3a;
+      margin-left: calc(-50vw + 50%);
       position: relative;
       left: 50%;
       right: 50%;
       transform: translateX(-50%);
-    }
-    /* ensure no gap above/below */
-    .stateline-wrapper {
-      width: 100%;
-      overflow: hidden;
-      line-height: 0;
-      font-size: 0;
     }
 
     /* ----- CLASSIC BRAND STYLE (Playfair Display) + SUBTEXT (Wellness Center) ----- */
@@ -341,26 +377,40 @@
       font-weight: 700;
       line-height: 1.1;
       color: #1c5a3a;
-      letter-spacing: -0.5px;  /* gives a premium, slightly tight look */
+      letter-spacing: -0.5px;
     }
     .brand-sub {
-      font-size: 0.6rem;      /* very small */
+      font-size: 0.6rem;
       letter-spacing: 0.1em;
       color: #1c5a3a;
-      margin-top: -4px;       /* pulls it closer to the main text */
+      margin-top: -4px;
       text-transform: uppercase;
       font-weight: 500;
       opacity: 0.8;
       font-family: 'Inter', sans-serif;
     }
+    
+    /* ⭐ Stateline ko fixed navbar ke saath adjust karne ke liye */
+    .stateline-fixed {
+      position: fixed;
+      top: 64px; /* navbar height ke barabar */
+      left: 0;
+      right: 0;
+      z-index: 999;
+    }
+    
+    @media (min-width: 768px) {
+      .stateline-fixed {
+        top: 96px;
+      }
+    }
   </style>
 </head>
 <body class="antialiased text-gray-800">
 
-  <!-- STICKY NAVBAR with black outline + attached stateline -->
-  <!-- ⭐ rounded-xl REMOVED, replaced with no rounding, added outline-like border black -->
-  <nav class="sticky top-0 z-30 bg-white/80 backdrop-blur-sm border-2 border-black card-shadow mx-5 md:mx-8 mt-2 nav-container" style="border-radius: 0 !important;">
-    <div class="max-w-7xl mx-auto px-5 md:px-8 flex items-center justify-between h-16 md:h-20">
+  <!-- ⭐ FIXED NAVBAR - ab scroll nahi hoga -->
+  <nav class="navbar-fixed border-2 border-black bg-white/80 backdrop-blur-sm" style="border-radius: 0 !important;">
+    <div class="nav-container flex items-center justify-between h-16 md:h-20">
       <!-- left logo: now CLASSIC with Playfair Display font and tiny "Wellness Center" below -->
       <div class="flex flex-col items-start justify-center">
         <div class="classic-brand">VIDMOSS</div>
@@ -404,12 +454,11 @@
     </div>
   </nav>
 
-  <!-- ⭐ FULL-WIDTH STATELINE (edge to edge, thinner height 2px, green) attached directly below navbar -->
-  <div class="stateline"></div>
+  <!-- ⭐ FULL-WIDTH STATELINE - ab fixed hai, navbar ke neeche -->
+  <div class="stateline stateline-fixed"></div>
 
   <main class="max-w-7xl mx-auto px-5 md:px-8 py-6 md:py-10 w-full overflow-x-hidden">
     <!-- HERO SECTION with dynamic aspect ratio: mobile 5:4, desktop 16:9, now with solid black border (2px) and radius only (no rgba shadow) -->
-    <!-- ANIMATION REMOVED: button classes btn-glow, btn-shine, btn-pulse, btn-float removed. Color swapped: Book Health Scan = white (bg-white text-green), Join Partner = green (bg-[#1c5a3a] text-white) -->
     <section class="relative rounded-3xl overflow-hidden card-shadow mb-16 hover-lift hero-base hero-16x9 flex items-end justify-center border-2 border-black" style="background-image: url('main.jpg'); background-size: cover; background-position: center;">
       <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
       
@@ -594,4 +643,4 @@
     });
   </script>
 </body>
-  </html>
+          </html>
