@@ -197,7 +197,6 @@
       transition: opacity 0.3s ease;
     }
     .btn-gradient-border:hover::before { opacity: 1; }
-    /* remove all floating, pulsing, shine, glow keyframes / classes — not applied anymore */
     .hover\:bg-\[\#14532d\]:hover { background-color: #14532d; }
     .hover\:bg-white:hover { background-color: #fff; }
     .hover\:bg-\[\#ecf9ec\]:hover { background-color: #ecf9ec; }
@@ -404,6 +403,48 @@
         top: 96px;
       }
     }
+
+    /* ----- HELP BUTTON (UPDATED: replaced "?" with outline robot icon) ----- */
+    .help-btn {
+      background-color: #1c5a3a;  /* solid green, matches VIDMOSS palette */
+      color: white;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.2s, background-color 0.2s;
+      text-decoration: none;
+    }
+    .help-btn:hover {
+      background-color: #14532d;
+      transform: scale(1.05);
+    }
+    /* robot icon - outline style, no fill, just like the menu button aesthetic */
+    .help-btn svg {
+      width: 1.4rem;
+      height: 1.4rem;
+      stroke: white;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* 🟢 FIX FOR DIAGNOSTICS IMAGE BOX — remove any gap below image */
+    .diagnostics-image-box {
+      display: flex;           /* ensures inner image fills completely */
+      align-items: stretch;    /* makes children stretch to full height */
+      padding: 0;              /* remove any default padding */
+      line-height: 0;          /* kill any inline spacing */
+      font-size: 0;            /* ensure no text gap */
+    }
+    .diagnostics-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;          /* removes bottom gap for inline images */
+    }
   </style>
 </head>
 <body class="antialiased text-gray-800">
@@ -417,13 +458,26 @@
         <div class="brand-sub">Wellness Center</div>
       </div>
 
-      <!-- right side: WhatsApp, Call, and SHAPELESS Menu button (no border/background) -->
+      <!-- right side: WhatsApp, Help, Call, and SHAPELESS Menu button -->
       <div class="flex items-center space-x-4">
-        <!-- WhatsApp button - updated to open chat directly with +917307062500 -->
+        <!-- WhatsApp button -->
         <a href="https://wa.me/917307062500" target="_blank" class="bg-[#25D366] text-white w-10 h-10 rounded-full flex items-center justify-center shadow-sm hover:scale-105 transition" aria-label="WhatsApp">
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.473-.149-.673.149-.2.297-.767.967-.94 1.165-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.673-1.62-.922-2.22-.242-.579-.487-.5-.673-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.87.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.413-.074-.124-.272-.198-.57-.347z"/>
             <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.556 4.12 1.526 5.851L.044 23.145c-.114.434.287.835.721.721l5.294-1.482C7.88 23.444 9.88 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.84 0-3.567-.495-5.05-1.36l-.363-.21-3.75 1.05 1.05-3.75-.21-.363A9.943 9.943 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/>
+          </svg>
+        </a>
+        <!-- HELP BUTTON: now with outline robot icon (no question mark) -->
+        <a href="chatbot.html" class="help-btn" aria-label="Help">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="10" rx="2" ry="2"></rect>
+            <circle cx="8" cy="16" r="1"></circle>
+            <circle cx="16" cy="16" r="1"></circle>
+            <line x1="8" y1="7" x2="8" y2="11"></line>
+            <line x1="16" y1="7" x2="16" y2="11"></line>
+            <line x1="12" y1="2" x2="12" y2="7"></line>
+            <line x1="6" y1="4" x2="8" y2="7"></line>
+            <line x1="18" y1="4" x2="16" y2="7"></line>
           </svg>
         </a>
         <!-- Call button -->
@@ -432,7 +486,7 @@
             <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
           </svg>
         </a>
-        <!-- SHAPELESS Menu button (no border, no background, just icon) -->
+        <!-- SHAPELESS Menu button -->
         <button id="menuToggle" class="menu-btn" aria-label="Menu">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -441,7 +495,7 @@
       </div>
     </div>
 
-    <!-- FULL-WIDTH DROPDOWN MENU PANEL (hidden by default) appears below navbar from left to right -->
+    <!-- FULL-WIDTH DROPDOWN MENU PANEL -->
     <div id="menuPanel" class="absolute animate-slideDown">
       <div class="flex flex-col py-2">
         <a href="#" class="menu-item">Home</a>
@@ -454,28 +508,23 @@
     </div>
   </nav>
 
-  <!-- ⭐ FULL-WIDTH STATELINE - ab fixed hai, navbar ke neeche -->
+  <!-- ⭐ FULL-WIDTH STATELINE - fixed below navbar -->
   <div class="stateline stateline-fixed"></div>
 
   <main class="max-w-7xl mx-auto px-5 md:px-8 py-6 md:py-10 w-full overflow-x-hidden">
-    <!-- HERO SECTION with dynamic aspect ratio: mobile 5:4, desktop 16:9, now with solid black border (2px) and radius only (no rgba shadow) -->
+    <!-- HERO SECTION (unchanged) -->
     <section class="relative rounded-3xl overflow-hidden card-shadow mb-16 hover-lift hero-base hero-16x9 flex items-end justify-center border-2 border-black" style="background-image: url('main.jpg'); background-size: cover; background-position: center;">
       <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-      
-      <!-- BUTTON GROUP — animations stripped, colors swapped per request -->
       <div class="relative z-10 w-full flex flex-col items-center justify-end pb-8 sm:pb-10 md:pb-12 lg:pb-16 px-4">
         <div class="flex flex-row flex-wrap justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-          <!-- Book Health Scan: now white background, green text (no green background) -->
           <button class="bg-white text-[#1c5a3a] border-2 border-[#1c5a3a] px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold shadow-md hover:bg-[#ecf9ec] transition transform hover:scale-105 min-w-[140px] sm:min-w-[160px] whitespace-nowrap btn-basic">
             Book Health Scan
           </button>
-          <!-- Start Wellness Center: keep as is (white bg, green border) – but color not swapped, stays secondary; fine -->
           <button class="btn-gradient-border bg-white text-[#1c5a3a] border-2 border-[#1c5a3a] px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold hover:bg-[#ecf9ec] transition transform hover:scale-105 min-w-[160px] sm:min-w-[180px] whitespace-nowrap relative">
             Start Wellness Center
           </button>
         </div>
         <div class="flex justify-center">
-          <!-- Join Partner: now GREEN background (was white) – color swap applied -->
           <button class="bg-[#1c5a3a] text-white border border-[#1c5a3a] px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold hover:bg-[#14532d] transition transform hover:scale-105 shadow-md min-w-[150px] sm:min-w-[160px] whitespace-nowrap btn-basic">
             Join Partner
           </button>
@@ -483,7 +532,7 @@
       </div>
     </section>
 
-    <!-- ADVANCED HEALTH DIAGNOSTICS -->
+    <!-- ADVANCED HEALTH DIAGNOSTICS — FIXED IMAGE BOX GAP -->
     <section class="grid md:grid-cols-2 gap-8 items-center mb-20">
       <div class="space-y-5">
         <h2 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">Advanced Health <span class="text-[#1c5a3a]">Diagnostics</span></h2>
@@ -495,12 +544,13 @@
         </ul>
         <button class="bg-[#1c5a3a] text-white px-7 py-3 rounded-full font-semibold shadow-md hover:bg-[#14532d] transition inline-block">View Diagnostics →</button>
       </div>
-      <div class="rounded-2xl overflow-hidden card-shadow hover-lift aspect-[5/4] border-2 border-[#1c5a3a]/30">
+      <!-- FIXED: diagnostics image box - no gap below image -->
+      <div class="rounded-2xl overflow-hidden card-shadow hover-lift aspect-[5/4] border-2 border-[#1c5a3a]/30 diagnostics-image-box">
         <img src="diagnostics.jpg" alt="futuristic health scanner" class="w-full h-full object-cover">
       </div>
     </section>
 
-    <!-- INTEGRATED SERVICES SECTION -->
+    <!-- INTEGRATED SERVICES SECTION (unchanged) -->
     <section class="mb-20">
       <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-10 text-center">VIDMOSS Integrated Services Network</h2>
       <div class="grid md:grid-cols-2 gap-8">
@@ -555,7 +605,7 @@
       </div>
     </section>
 
-    <!-- PHOTO GALLERY -->
+    <!-- PHOTO GALLERY (unchanged) -->
     <section class="mb-20">
       <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8 text-center">Wellness Gallery</h2>
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
@@ -569,7 +619,7 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
+  <!-- FOOTER (unchanged) -->
   <footer class="bg-white/70 backdrop-blur-sm border-t border-white/40 py-12 px-5 md:px-8 rounded-t-3xl card-shadow w-full border-2 border-[#1c5a3a]/30 mx-5 md:mx-8 mb-2" style="width: auto;">
     <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8">
       <div>
@@ -604,7 +654,7 @@
         <div class="flex gap-4 mt-4">
           <svg class="w-5 h-5 text-[#1c5a3a] hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.56v14.91A4.53 4.53 0 0119.44 24H4.56A4.53 4.53 0 010 19.44V4.56A4.53 4.53 0 014.56 0h14.91A4.53 4.53 0 0124 4.56zM19.06 4h-2.62a4.93 4.93 0 00-4.93 4.93v2.62h-2.6v3.54h2.6v7.08h3.55v-7.08h2.62l.41-3.54h-3.03V8.93c0-.79.64-1.43 1.43-1.43h1.57V4z"/></svg>
           <svg class="w-5 h-5 text-[#1c5a3a] hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 001.88-2.37 8.6 8.6 0 01-2.72 1.04 4.27 4.27 0 00-7.28 3.9A12.13 12.13 0 013 4.1a4.27 4.27 0 001.32 5.7 4.25 4.25 0 01-1.94-.54v.05a4.28 4.28 0 003.42 4.2 4.3 4.3 0 01-1.93.07 4.28 4.28 0 004 2.98A8.6 8.6 0 012 19.54a12.07 12.07 0 006.55 1.92c7.86 0 12.15-6.5 12.15-12.15 0-.18-.01-.37-.02-.55A8.68 8.68 0 0024 5.56a8.57 8.57 0 01-2.54.7z"/></svg>
-          <svg class="w-5 h-5 text-[#1c5a3a] hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.06 1.96.25 2.66.52.73.28 1.36.66 1.98 1.28a5.8 5.8 0 011.28 1.98c.27.7.46 1.49.52 2.66.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.06 1.17-.25 1.96-.52 2.66a5.8 5.8 0 01-1.28 1.98c-.62.62-1.25 1-1.98 1.28-.7.27-1.49.46-2.66.52-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.06-1.96-.25-2.66-.52a5.8 5.8 0 01-1.98-1.28 5.8 5.8 0 01-1.28-1.98c-.27-.7-.46-1.49-.52-2.66-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.06-1.17.25-1.96.52-2.66a5.8 5.8 0 011.28-1.98A5.8 5.8 0 014.5 2.75c.7-.27 1.49-.46 2.66-.52C8.43 2.17 8.81 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.75.13 4.9.33 4.05.7 3.2 1.06 2.37 1.6 1.6 2.37A7.8 7.8 0 00.07 4.05C-.01 4.9-.01 5.75-.01 7.05v9.9c0 1.3.02 2.15.08 3 .06 1.3.26 2.15.63 3 .36.85.9 1.68 1.67 2.45a7.8 7.8 0 002.45 1.67c.85.37 1.7.57 3 .63 1.3.06 1.7.07 3 .07h9.9c1.3 0 2.15-.01 3-.07 1.3-.06 2.15-.26 3-.63a7.8 7.8 0 002.45-1.67 7.8 7.8 0 001.67-2.45c.37-.85.57-1.7.63-3 .06-1.3.07-1.7.07-3V7.05c0-1.3-.01-2.15-.07-3-.06-1.3-.26-2.15-.63-3a7.8 7.8 0 00-1.67-2.45A7.8 7.8 0 0019.95.07C18.65-.01 17.8-.01 16.5-.01H7.05C5.75-.01 4.9 0 4.05.07 3.2.13 2.35.33 1.5.7.65 1.06-.18 1.6-.95 2.37A7.8 7.8 0 00-1.62 4.05C-1.7 4.9-1.7 5.75-1.7 7.05v9.9z"/><path d="M12 5.84A6.16 6.16 0 1018.16 12 6.16 6.16 0 0012 5.84zM12 16a4 4 0 114-4 4 4 0 01-4 4z"/><circle cx="18.4" cy="5.6" r="1.44"/></svg>
+          <svg class="w-5 h-5 text-[#1c5a3a] hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.06 1.96.25 2.66.52.73.28 1.36.66 1.98 1.28a5.8 5.8 0 011.28 1.98c.27.7.46 1.49.52 2.66.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.06 1.17-.25 1.96-.52 2.66a5.8 5.8 0 01-1.28 1.98c-.62.62-1.25 1-1.98 1.28-.7.27-1.49.46-2.66.52-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.06-1.96-.25-2.66-.52a5.8 5.8 0 01-1.98-1.28 5.8 5.8 0 01-1.28-1.98c-.27-.7-.46-1.49-.52-2.66-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.06-1.17.25-1.96.52-2.66a5.8 5.8 0 011.28-1.98A5.8 5.8 0 014.5 2.75c.7-.27 1.49-.46 2.66-.52C8.43 2.17 8.81 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.75.13 4.9.33 4.05.7 3.2 1.06 2.37 1.6 1.6 2.37A7.8 7.8 0 00.07 4.05C-.01 4.9-.01 5.75-.01 7.05v9.9c0 1.3.02 2.15.08 3 .06 1.3.26 2.15.63 3 .36.85.9 1.68 1.67 2.45a7.8 7.8 0 002.45 1.67c.85.37 1.7.57 3 .63 1.3.06 1.7.07 3 .07h9.9c1.3 0 2.15-.01 3-.07 1.3-.06 2.15-.26 3-.63a7.8 7.8 0 002.45-1.67 7.8 7.8 0 001.67-2.45c.37-.85.57-1.7.63-3 .06-1.3.07-1.7.07-3V7.05c0-1.3-.01-2.15-.07-3-.06-1.3-.26-2.15-.63-3a7.8 7.8 0 00-1.67-2.45A7.8 7.8 0 0019.95.07C18.65-.01 17.8-.01 16.5-.01H7.05C5.75-.01 4.9 0 4.05.07 3.2.13 2.35.33 1.5.7.65 1.06-.18 1.6-.95 2.37A7.8 7.8 0 00-1.62 4.05C-1.7 4.9-1.7 5.75-1.7 7.05v9.9z"/><circle cx="18.4" cy="5.6" r="1.44"/></svg>
         </div>
       </div>
     </div>
@@ -616,26 +666,19 @@
     const menuToggle = document.getElementById('menuToggle');
     const menuPanel = document.getElementById('menuPanel');
 
-    // initially hidden
     menuPanel.style.display = 'none';
 
     menuToggle.addEventListener('click', (e) => {
       e.stopPropagation();
-      if (menuPanel.style.display === 'none' || menuPanel.style.display === '') {
-        menuPanel.style.display = 'block';
-      } else {
-        menuPanel.style.display = 'none';
-      }
+      menuPanel.style.display = (menuPanel.style.display === 'none' || menuPanel.style.display === '') ? 'block' : 'none';
     });
 
-    // close if click outside
     document.addEventListener('click', (event) => {
       if (!menuToggle.contains(event.target) && !menuPanel.contains(event.target)) {
         menuPanel.style.display = 'none';
       }
     });
 
-    // optional: close menu after clicking a link (for single page feel)
     document.querySelectorAll('#menuPanel a').forEach(link => {
       link.addEventListener('click', () => {
         menuPanel.style.display = 'none';
@@ -643,4 +686,4 @@
     });
   </script>
 </body>
-          </html>
+</html>
