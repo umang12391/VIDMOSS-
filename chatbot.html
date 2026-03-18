@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIDMOSS Help Agent AI</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+body{height:100vh;display:flex;flex-direction:column;background:#fff;}
+
+.navbar{padding:12px;border-bottom:1.2px solid #1c5a3a;}
+.logo{color:#1c5a3a;font-size:1.4rem;font-weight:bold;font-family:Georgia;}
+.sub-text{font-size:0.6rem;color:#1c5a3a;}
+
+.chat-container{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;}
+
+.message{max-width:75%;padding:10px;margin:5px;border-radius:14px;line-height:1.6;}
+.user{background:#000;color:#fff;margin-left:auto;}
+.bot{background:#eee;color:#000;}
+
+.suggestions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  padding:8px;
+}
+.suggestions button{
+  background:#f1f1f1;
+  border:none;
+  padding:6px 10px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.input-area{display:flex;border-top:1px solid #1c5a3a;padding:6px;gap:6px;}
+input{flex:1;padding:10px;border-radius:20px;border:1px solid #1c5a3a;}
+button.send{padding:10px;background:#1c5a3a;color:#fff;border:none;border-radius:20px;}
+
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <div class="logo">VIDMOSS</div>
+  <div class="sub-text">HELP AGENT AI</div>
+</div>
+
+<div id="chat" class="chat-container"></div>
+
+<!-- Suggestions -->
+<div class="suggestions">
+  <button onclick="quickAsk('What is VIDMOSS?')">What is VIDMOSS?</button>
+  <button onclick="quickAsk('Services')">Services</button>
+  <button onclick="quickAsk('Diagnostics')">Diagnostics</button>
+  <button onclick="quickAsk('Partner')">Partner</button>
+  <button onclick="quickAsk('Date')">Date</button>
+  <button onclick="quickAsk('2+2')">2+2</button>
+</div>
+
+<div class="input-area">
+  <input id="input" placeholder="Ask something...">
+  <button class="send" onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+const chat = document.getElementById("chat");
+const input = document.getElementById("input");
+
+// SMART BOT FUNCTION
+function getBotResponse(msg){
+
+msg = msg.toLowerCase();
+
+// WEBSITE KNOWLEDGE
+if(msg.includes("vidmoss")){
+  return "VIDMOSS is a wellness and business network platform that provides health diagnostics and business opportunities.";
+}
+
+if(msg.includes("service")){
+  return "VIDMOSS provides wellness services like Panchakarma Therapy, Detox Therapy, Stress Management and AI Diagnostics.";
+}
+
+if(msg.includes("diagnostic")){
+  return "VIDMOSS offers AI Nadi Tarangini Scan, Quantum Health Scan and Aura Energy Analysis.";
+}
+
+if(msg.includes("partner")){
+  return "You can join VIDMOSS Partner Network and earn through wellness services like therapy, tele-doc, and medicine delivery.";
+}
+
+if(msg.includes("contact")){
+  return "You can contact VIDMOSS at +91 7307062500.";
+}
+
+// DATE
+if(msg.includes("date")){
+  return new Date().toDateString();
+}
+
+// WEATHER (basic)
+if(msg.includes("weather")){
+  return "Weather feature is basic in offline mode. Please connect API for live weather.";
+}
+
+// MATH
+try{
+  if(msg.match(/[0-9+\-*/.]/)){
+    return eval(msg).toString();
+  }
+}catch{}
+
+// DEFAULT
+return "I only provide information about VIDMOSS website. Please ask related questions.";
+}
+
+// SEND MESSAGE
+function sendMessage(){
+  const text = input.value.trim();
+  if(!text) return;
+
+  addMessage(text,"user");
+  input.value="";
+
+  setTimeout(()=>{
+    const reply = getBotResponse(text);
+    addMessage(reply,"bot");
+  },400);
+}
+
+// QUICK BUTTON
+function quickAsk(text){
+  input.value = text;
+  sendMessage();
+}
+
+// ADD MESSAGE
+function addMessage(text,type){
+  const div=document.createElement("div");
+  div.className="message "+type;
+  div.innerText=text;
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+// ENTER KEY
+input.addEventListener("keypress",e=>{
+  if(e.key==="Enter") sendMessage();
+});
+</script>
+
+</body>
+</html>
